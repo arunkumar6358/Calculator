@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Handjet:wght@300;400&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #f5f5f5;
+            font-family: 'Handjet', cursive;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #tabl {
+            width: 320px;
+            background-color: #444;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            color: white;
+            padding: 3px;
+        }
+        #tabl h1 {
+            font-size: 24px;
+            padding: 20px;
+            text-align: center;
+            background-color: #333;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        #result {
+            width: 100%;
+            height: 50px;
+            background-color: yellowgreen;
+            text-align: right;
+            font-size: 20px;
+            padding: 10px;
+            user-select: none;
+            box-sizing: border-box;
+            color: #ddd;
+        }
+        input[type="button"] {
+            background-color: #e74c3c;
+            cursor: pointer;
+            width: 25%;
+            padding: 15px;
+            font-weight: bold;
+            font-size: 20px;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            margin: 5px;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        input[type="button"]:hover {
+            background-color: #c0392b;
+        }
+        .char {
+            width: 25%;
+        }
+        #eq1 {
+            height: 240px;
+        }
+        .paddbtn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            height: 100%;
+        }
+        #result:hover{
+            background-color: green;
+            user-select: none;
+        }
+        @media screen and (max-width: 768px) {
+            input[type="button"] {
+                width: 30%;
+                padding: 12px;
+                font-size: 18px;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            input[type="button"] {
+                width: 40%;
+                padding: 10px;
+                font-size: 16px;
+            }
+        }
+
+        @media screen and (max-width: 400px) {
+            input[type="button"] {
+                width: 45%;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="tabl">
+        <h1>Calculator</h1>
+        <table border="0">
+        <tbody>
+            <tr>
+                <td colspan="3" align="center"><input type="text" id="result"></td>
+                <td align="center"><input type="button" class="paddbtn" value="%" onclick="handleButtonClick(' % ')"></td>
+                <td align="center"><input type="button" class="paddbtn" value="C" onclick="clearInput()"></td>
+            </tr>
+            <tr>
+                <td align="center"><input type="button" class="paddbtn" value="7" onclick="handleButtonClick('7')"></td>
+                <td align="center"><input type="button" class="paddbtn" value="8" onclick="handleButtonClick('8')"></td>
+                <td align="center"><input type="button" class="paddbtn" value="9" onclick="handleButtonClick('9')"></td>
+                <td align="center"><input type="button" class="paddbtn" class="char" value="/" onclick="handleButtonClick(' / ')"></td>
+                <td rowspan="4"  align="center"><input type="button" class="paddbtn" id="eq1" value="=" onclick="calculate()"></td>
+            </tr>
+            <tr>
+                <td align="center"><input type="button" value="4" class="paddbtn" onclick="handleButtonClick('4')"></td>
+                <td align="center"><input type="button" value="5" class="paddbtn"  class="paddbtn" onclick="handleButtonClick('5')"></td>
+                <td align="center"><input type="button" value="6"  class="paddbtn" onclick="handleButtonClick('6')"></td>
+                <td align="center"><input type="button"  class="paddbtn" class="char" value="*" onclick="handleButtonClick(' * ')"></td>
+            </tr>
+            <tr>
+                <td align="center"><input type="button"  class="paddbtn" value="1" onclick="handleButtonClick('1')"></td>
+                <td align="center"><input type="button"  class="paddbtn" value="2" onclick="handleButtonClick('2')"></td>
+                <td align="center"><input type="button"  class="paddbtn" value="3" onclick="handleButtonClick('3')"></td>
+                <td align="center"><input type="button"  class="paddbtn" class="char" value="+" onclick="handleButtonClick(' + ')"></td>
+            </tr>
+            <tr>
+                <td align="center"><input type="button"  class="paddbtn" value="0" onclick="handleButtonClick('0')"></td>
+                <td align="center"><input type="button"  class="paddbtn" value="00" onclick="handleButtonClick('00')"></td>
+                <td align="center"><input type="button"  class="paddbtn" value="." onclick="handleButtonClick('.')"></td>
+                <td align="center"><input type="button"  class="paddbtn" class="char" value="-" onclick="handleButtonClick(' - ')"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+    <script>
+        // Function to handle button clicks
+        function handleButtonClick(value) {
+            const inputField = document.getElementById('result');
+            inputField.value += value;
+        }
+
+        // Function to clear the input field
+        function clearInput() {
+            const inputField = document.getElementById('result');
+            inputField.value = '';
+        }
+
+        // Function to perform calculations
+        function calculate() {
+            const inputField = document.getElementById('result');
+            const expression = inputField.value;
+
+            try {
+                const result = eval(expression); // Using eval for simplicity (not recommended for production)
+                inputField.value = result;
+            } catch (error) {
+                inputField.value = 'Error';
+            }
+        }
+    </script>
+</body>
+</html>
